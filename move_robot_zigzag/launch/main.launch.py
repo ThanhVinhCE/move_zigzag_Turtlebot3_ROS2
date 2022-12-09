@@ -26,7 +26,6 @@ def generate_launch_description():
         )
     )
 
-    # how can I pass map_dir to navigation2.launch.py ?
     start_rviz = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([turtlebot3_launch_dir, '/navigation2.launch.py']),
         launch_arguments = {
