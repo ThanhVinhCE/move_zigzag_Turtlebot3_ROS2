@@ -91,8 +91,6 @@ class SubscriberClass(Node):
 
     def scan_callback(self, msg):
         self.laser_msg = msg
-        # self.get_logger().info('laser_msg: ')
-        # self.get_logger().info(f'{self.laser_msg}')
 
     def stop_robot(self):
         self.vel_msg.linear.x = 0.0
@@ -130,9 +128,7 @@ class SubscriberClass(Node):
     
     def rotate_clockwise(self, desired_angle):
         self.rotating = True
-        # self.get_logger().info('In rotate_clockwise_new')
-
-        # self.target_angle = -desired_angle*(np.pi)/180.0 + self.yaw
+        
         initial_yaw = self.yaw
         self.target_angle = -desired_angle*(np.pi)/180.0 + initial_yaw
         error_angle = 0.0
