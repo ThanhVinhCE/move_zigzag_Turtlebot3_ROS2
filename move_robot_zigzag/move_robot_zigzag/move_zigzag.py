@@ -37,16 +37,12 @@ class SubscriberClass(Node):
         self.roll = 0.0
         self.pitch = 0.0
         self.yaw = 0.0
-        # self.publisher = PublisherClass()
 
         self.safe_distance = 0.3
 
-        # self.first_call = True
         self.first_call = True
 
-        # self.rotate_part1_completed = False
         self.rotate_part1_completed = False
-        # self.rotating = False
         self.rotating = False
 
         self.rotate_counter_clk_completed = False
@@ -54,34 +50,11 @@ class SubscriberClass(Node):
 
         self.move_straight_flag = False
         self.move_backward_flag = False
-        # self.moving_backward = False
-        # self.rotate_clk_safe = False
-        # self.rotate_counter_clk_safe = False
         self.move_zigzag_completed = False
-
-        # self.target_angle = 0.0
-        # self.target_angle1 = 999.0
-        # self.target_angle2 = 999.0
-
-        # self.target_angle = 0.0
-        # self.target_angle1 = 999.0
-        # self.target_angle2 = 999.0
 
         self.target_angle = 0.0
         self.target_angle1 = 999.0
         self.target_angle2 = 999.0
-
-        # self.first_read = True
-
-        # self.count_rotate_clk_time = 0
-        # self.count_rotate_counter_clk_time = 0
-        # self.move_straight_1s_done = False
-        # self.move_straight_period_done = False
-
-        # self.count_time = 0
-        # self.move_straight_period = 3
-
-        # self.move_straight_time = 3
 
         self.initial_pose_is_set = False
 
@@ -102,10 +75,7 @@ class SubscriberClass(Node):
         self.is_moving_backward = False
         self.move_straight_in_a_period_time_finished = False
         self.pausing_move_straight = False
-        # self.pausing_rotate_clk = False
-        # self.pausing_rotate_counter_clk = False
         self.start_moving_backward_1s = False
-        # self.move_backward_2s_finished = False
 
         self.state = 'STOPPED'
 
@@ -257,92 +227,6 @@ class SubscriberClass(Node):
                         self.publisher.stop_robot()
                         break
 
-    # def rotate_clockwise(self,desired_angle):
-    #     self.rotating = True
-
-    #     while self.first_call == True:
-    #         if self.yaw <= 0:
-    #             if abs(self.yaw + (np.pi)) > 0.01:
-    #                 self.publisher.stop_robot()
-    #                 self.target_angle = -desired_angle*(np.pi)/180.0 + self.yaw
-    #                 if abs(self.target_angle + np.pi) > 0.02 and abs(self.target_angle) > np.pi:
-    #                     self.target_angle1 = -self.yaw - (np.pi)
-    #                     self.target_angle2 = (np.pi) - (desired_angle*np.pi/180.0 + self.target_angle1)
-
-    #                 self.first_call = False
-    #             else:
-    #                 self.publisher.rotate_clockwise_small_angle()
-    #         else:
-    #             if abs(self.yaw) > 0.01:
-    #                 self.publisher.stop_robot()
-    #                 self.target_angle = self.yaw - desired_angle*(np.pi)/180.0
-    #                 if abs(self.target_angle) > 0.02 and self.target_angle < 0.0:
-    #                     self.target_angle1 = self.yaw
-    #                     self.target_angle2 = - (desired_angle*np.pi/180.0 - self.target_angle1)
-                        
-    #                 self.first_call = False
-    #             else:
-    #                 self.publisher.rotate_clockwise_small_angle()
-
-    #     while True:
-
-    #         if self.target_angle1 != 999.0 and self.target_angle1 < 0:
-    #             if self.rotate_part1_completed == False:
-    #                 error_angle = self.yaw + (np.pi)
-    #             else:
-    #                 while self.yaw < 0:
-    #                     self.publisher.rotate_clockwise_small_angle()
-
-    #                 if self.yaw > 0:
-    #                     self.publisher.stop_robot()
-    #                     error_angle = -self.target_angle2 + self.yaw
-
-    #         elif self.target_angle1 != 999.0 and self.target_angle1 > 0:
-    #             if self.rotate_part1_completed == False:
-    #                 error_angle = self.yaw
-    #             else:
-    #                 while self.yaw > 0:
-    #                     self.publisher.rotate_clockwise_small_angle()
-
-    #                 if self.yaw <= 0:
-    #                     self.publisher.stop_robot()
-    #                     error_angle = self.target_angle2 - self.yaw
-    #         else:
-    #             error_angle = self.target_angle - self.yaw
-    #             self.rotate_part1_completed = True
-
-    #         if self.rotate_clk_completed == False:
-    #             if abs(error_angle) > 0.005:
-    #                 if abs(error_angle) > 0.03:
-    #                     if abs(error_angle) < np.pi:
-    #                         if abs(error_angle) > 2.5:
-    #                             rotational_velocity = -0.1*abs(error_angle)
-    #                         elif abs(error_angle) > 1.5 and abs(error_angle) <= 2.5:
-    #                             rotational_velocity = -0.2*abs(error_angle)
-    #                         else:
-    #                             rotational_velocity = -0.5*abs(error_angle)
-    #                 else:
-    #                     rotational_velocity = -0.01
-    #                 command_vel = 0.0
-    #                 self.publisher.publish_vel(command_vel, rotational_velocity)
-    #                 time.sleep(0.1)
-    #             else:
-    #                 if self.rotate_part1_completed == False:
-    #                     self.rotate_part1_completed = True
-    #                     self.get_logger().info('ROTATE PARTIALLY COMPLETED')
-    #                 else:
-    #                     self.get_logger().info('ROTATE COMPLETED')
-    #                     self.rotating = False
-    #                     self.rotate_clk_completed = True
-    #                     self.target_angle = 0.0
-    #                     self.target_angle1 = 999.0
-    #                     self.target_angle2 = 999.0
-    #                     self.rotate_part1_completed = False
-    #                     # self.first_call = True
-    #                     # self.count_rotate_clk_time += 1
-    #                     self.publisher.stop_robot()
-    #                     break
-
     def rotate_counter_clockwise(self, desired_angle):
         self.rotating = True
 
@@ -438,103 +322,12 @@ class SubscriberClass(Node):
                         # self.count_rotate_counter_clk_time += 1
                         self.publisher.stop_robot()
                         break
-                
-    
-    # def rotate_counter_clockwise(self, desired_angle):
-    #     self.rotating = True
-
-    #     while self.first_call:
-    #         if self.yaw < 0:
-    #             if abs(self.yaw) >= 0.01:
-    #                 self.publisher.stop_robot()
-    #                 self.target_angle = desired_angle*(np.pi)/180.0 + self.yaw
-    #                 if abs(self.target_angle + (np.pi)) > 0.02 and self.target_angle > 0.0:
-    #                     self.target_angle1 = self.yaw
-    #                     self.target_angle2 = desired_angle*(np.pi)/180.0 + self.target_angle1
-    #                 self.first_call = False
-    #             else:
-    #                 self.publisher.rotate_counter_clockwise_small_angle()
-    #         else:
-    #             if abs(np.pi - self.yaw) > 0.01:
-    #                 self.publisher.stop_robot()
-    #                 self.target_angle = desired_angle*(np.pi)/180.0 + self.yaw
-    #                 if abs(self.target_angle - (np.pi)) > 0.02 and self.target_angle > 3.0:
-    #                     self.target_angle1 = (np.pi) - self.yaw
-    #                     self.target_angle2 = (np.pi) - (desired_angle*np.pi/180.0 - self.target_angle1)
-    #                 self.first_call = False
-    #             else:
-    #                 self.publisher.rotate_counter_clockwise_small_angle()
-
-    #     while True:
-
-    #         if self.target_angle1 != 999.0 and self.target_angle1 < 0:
-    #             if self.rotate_part1_completed == False:
-    #                 error_angle = self.yaw
-    #             else:
-    #                 while self.yaw < 0:
-    #                     self.publisher.rotate_counter_clockwise_small_angle()
-
-    #                 if self.yaw > 0:
-    #                     self.publisher.stop_robot()
-    #                     error_angle = self.target_angle2 - self.yaw
-
-    #         elif self.target_angle1 != 999.0 and self.target_angle1 > 0:
-    #             if self.rotate_part1_completed == False:
-    #                 error_angle = np.pi - self.yaw
-    #             else:
-    #                 while self.yaw > 0:
-    #                     self.publisher.rotate_counter_clockwise_small_angle()
-
-    #                 if self.yaw < 0:
-    #                     self.publisher.stop_robot()
-    #                     error_angle = self.target_angle2 + self.yaw
-    #         else:
-    #             error_angle = self.target_angle - self.yaw
-    #             self.rotate_part1_completed = True
-
-    #         if self.rotate_counter_clk_completed == False:
-    #             if abs(error_angle) > 0.005:
-    #                 if abs(error_angle) > 0.03:
-    #                     if abs(error_angle) < np.pi:
-    #                         if abs(error_angle) > 2.5:
-    #                             rotational_velocity = 0.1*abs(error_angle)
-    #                         elif abs(error_angle) > 1.5 and abs(error_angle) <= 2.5:
-    #                             rotational_velocity = 0.2*abs(error_angle)
-    #                         else:
-    #                             rotational_velocity = 0.5*abs(error_angle)
-    #                 else:
-    #                     rotational_velocity = 0.01
-    #                 command_vel = 0.0
-    #                 self.publisher.publish_vel(command_vel, rotational_velocity)
-    #                 time.sleep(0.1)
-    #             else:
-    #                 if self.rotate_part1_completed == False:
-    #                     self.rotate_part1_completed = True
-    #                     self.get_logger().info('ROTATE PARTIALLY COMPLETED')
-    #                 else:
-    #                     self.get_logger().info('ROTATE COMPLETED')
-    #                     self.rotating = False
-    #                     self.rotate_counter_clk_completed = True
-    #                     self.target_angle = 0.0
-    #                     self.target_angle1 = 999.0
-    #                     self.target_angle2 = 999.0
-    #                     self.rotate_part1_completed = False
-    #                     self.first_call = True
-    #                     # self.count_rotate_counter_clk_time += 1
-    #                     self.publisher.stop_robot()
-    #                     break
-
-    
 
     def move_zigzag_new_version(self):
 
         while self.move_zigzag_completed == False:
-            # self.get_logger().info('Here')
-
-            # time.sleep(0.1)
-            # self.get_logger().info(f'front distance: {self.laser_msg.ranges[359]}')
+   
             front_distance = self.laser_msg.ranges[359]
-            # self.get_logger().info('Here kkkk')
             left_wheel_distance = self.laser_msg.ranges[22]
             right_wheel_distance = self.laser_msg.ranges[332]
 
@@ -613,10 +406,6 @@ class SubscriberClass(Node):
                         (self.not_rotating_counter_clk_yet and not self.can_rotate_counter_clk) or \
                         (self.not_rotating_clk_yet and not self.can_rotate_clk)) and not self.start_moving_backward_1s:
                             if self.can_move_backward:
-                                # if not self.can_rotate_counter_clk:
-                                #     self.pausing_rotate_counter_clk = True
-                                # elif not self.can_rotate_clk:
-                                #     self.pausing_rotate_clk = True
                                 self.move_backward_finished = False
                                 self.pausing_move_straight = True
                                 self.get_logger().info('MOVING BACKWARD')
@@ -678,14 +467,7 @@ class SubscriberClass(Node):
                     self.move_straight_in_a_period_time_finished = True
                     self.state = 'STOPPED'
                 else:
-                    # move_straight_time = 3
-                    # for i in range(self.move_straight_time):
-                    #     if self.can_move_straight:
-                    #         self.publisher.move_straight_1s()
-                    #         # self.publisher.stop_robot()
-                    #     else:
-                    #         break
-                    self.publisher.move_straight_in_a_period_time(4, self.can_move_straight)
+                    self.publisher.move_straight_in_a_period_time(3, self.can_move_straight)
 
             elif self.state == 'MOVING_BACKWARD_1S':
                 if self.publisher.time_up:
@@ -722,17 +504,6 @@ class SubscriberClass(Node):
     def timer_callback(self):
         self.get_logger().info("Timer CallBack")
         try:
-            # if self.first_call:
-            #     self.rotate_clockwise_new(90)
-            # else:
-            #     self.publisher.stop_robot()
-
-            # self.move_zigzag_new_version()
-
-            # self.move_zigzag()
-            # self.turn_counter_clockwise(179)
-
-            # self.move_straight_and_turn_clockwise()
             if self.initial_pose_is_set == True:
                 if self.publisher.ready_to_run == False:
                     self.publisher.wait_for_20s_before_move()
@@ -817,7 +588,7 @@ class PublisherClass(Node):
         self.cmd.linear.x = self.linear_velocity
         self.cmd.angular.z = 0.0
         self.vel_pub.publish(self.cmd)
-        time.sleep(0.5)
+        time.sleep(1.0)
 
     def rotate_clockwise_small_angle(self):
         # self.get_logger().info('In rotate_clockwise_small_angle function')
